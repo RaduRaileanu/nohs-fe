@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div id="login-container" class="card-50">
+  <div id="login-container" class="card-25">
     <form class="card-container">
       <h2>Login</h2>
       <div class="form-group">
@@ -15,15 +15,11 @@
         <input type="password" id="password" name="password" placeholder="Enter your password" required>
       </div>
       <button type="submit">Login</button>
-      <!-- <p>Don't have an account yet?
-        <a href="/sign"></a> 
-        <button class="sign-up-button" @click="redirectToSignUp">Sign Up</button>
-      </p> -->
     </form>
 
     <div class="card-container">
       <p>Don't have an account yet? 
-          <a href="/signup">Sign up</a> 
+        <span><RouterLink to="/signup">Sign up</RouterLink></span>
       </p>
     </div>
   </div>
@@ -45,26 +41,12 @@ h3 {
 .greetings h3 {
   text-align: center;
 }
-/* 
+
 @media (min-width: 1024px) {
   .greetings h1,
   .greetings h3 {
     text-align: left;
   }
-} */
-.card-50{
-  width: 50vw;
-  margin: 0 auto;
-  margin-top: 5vw;
-  padding: 2rem;
-  font-weight: normal;
-}
-
-.card-container {
-  background-color: var(--color-background-soft);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 form.card-container h2 {
@@ -77,7 +59,6 @@ form.card-container h2 {
 
 div.card-container{
   margin-top: 3vw;
-  /* padding-left: 25%; */
   text-align: center;
 }
 
@@ -115,6 +96,5 @@ button:hover {
 
 a{
   font-weight: bold;
-  margin-left: 2rem;
 }
 </style>
