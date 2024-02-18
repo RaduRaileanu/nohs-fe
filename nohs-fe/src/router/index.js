@@ -99,7 +99,7 @@ function checkAuth(){
   return false;
 }
 
-const UNRESTRICTED_ROUTES = ['not found', 'login', 'signup', 'home', 'documenation'];
+const UNRESTRICTED_ROUTES = ['not found', 'login', 'signup', 'home', 'about', 'docs'];
 
 const ALL_ROUTES = ['not found', 'login', 'signup', 'home', 'about', 'docs', 'organisationInfo', 'userInfo', 'billingInfo', 'subscriptionInfo', 'test', 'not found'];
 
