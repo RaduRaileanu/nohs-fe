@@ -1,5 +1,37 @@
 <script setup>
+  import axios from 'axios';
+  import { reactive } from 'vue';
+  import {useUserStore} from '@/stores/userStore'
 
+  const userStore = useUserStore();
+
+  const credentials = reactive({
+    email: 'john.doe',
+    password: ''
+  });
+
+  async function loginUser() {
+
+    console.log(credentials);
+
+    try {
+      // Make a POST request to the login endpoint with the credentials
+      const response = await axios.post('http://127.0.0.1:8080/auth/login', credentials);
+      
+      // Assuming the API returns a token upon successful login
+      const token = response.data.accessToken;
+      
+      // Store the token in Pinia for authentication
+      userStore.token = token;
+      
+      // Return the response or data you need
+      return response.data;
+    } catch (error) {
+      // Handle any errors, such as network errors or invalid credentials
+      console.error('Error logging in:', error);
+      throw error; // Optionally, rethrow the error to be caught elsewhere
+    }
+  }
 </script>
 
 <template>
@@ -8,13 +40,13 @@
       <h2>Login</h2>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        <input v-model="credentials.email" type="email" id="email" name="email" placeholder="Enter your email" required>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        <input v-model="credentials.password" type="password" id="password" name="password" placeholder="Enter your password" required>
       </div>
-      <button type="submit">Login</button>
+      <button @click.prevent.stop="loginUser()">Login</button>
     </form>
 
     <div class="card-container">
