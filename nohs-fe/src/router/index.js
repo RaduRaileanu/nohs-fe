@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import pinia from '@/stores/store.js'
+import {useUserStore} from '@/stores/userStore'
 
 // general purpose views
 import NotFound from '../views/404View.vue'
@@ -16,6 +18,8 @@ import OrganisationInfoView from '../views/OrganisationInfoView.vue'
 import BillingInfoView from '../views/BillingInfoView.vue'
 import SubscriptionInfoView from '../views/SubscriptionInfoView.vue'
 import TestServiceView from '../views/TestServiceView.vue'
+
+const userStore = useUserStore(pinia);
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -80,15 +84,15 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from) => {
+router.beforeEach((to, from, next) => {
   const isAuth = checkAuth();
   
   if(UNRESTRICTED_ROUTES.includes(to.name)){
-    return true;
+    next();
   }
   else {
     if(!isAuth){
-      return '/login';
+      next({ path: '/login', query: { redirect: to.fullPath } });
     } 
   }
   
@@ -96,7 +100,7 @@ router.beforeEach((to, from) => {
 });
 
 function checkAuth(){
-  return false;
+  return userStore.token ? true : false;
 }
 
 const UNRESTRICTED_ROUTES = ['not found', 'login', 'signup', 'home', 'about', 'docs'];

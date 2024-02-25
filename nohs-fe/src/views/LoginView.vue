@@ -1,9 +1,10 @@
 <script setup>
   import axios from 'axios';
   import { reactive } from 'vue';
+  import pinia from '@/stores/store.js'
   import {useUserStore} from '@/stores/userStore'
 
-  const userStore = useUserStore();
+  const userStore = useUserStore(pinia);
 
   const credentials = reactive({
     email: 'john.doe',
@@ -12,8 +13,6 @@
 
   async function loginUser() {
 
-    console.log(credentials);
-
     try {
       // Make a POST request to the login endpoint with the credentials
       const response = await axios.post('http://127.0.0.1:8080/auth/login', credentials);
@@ -21,7 +20,7 @@
       // Assuming the API returns a token upon successful login
       const token = response.data.accessToken;
       
-      // Store the token in Pinia for authentication
+      // Store the token in store for authentication
       userStore.token = token;
       
       // Return the response or data you need
