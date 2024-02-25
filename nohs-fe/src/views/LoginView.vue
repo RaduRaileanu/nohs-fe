@@ -3,8 +3,11 @@
   import { reactive } from 'vue';
   import pinia from '@/stores/store.js'
   import {useUserStore} from '@/stores/userStore'
+  import {useNavStore} from '@/stores/navStore'
+  import router from '@/router/index';
 
   const userStore = useUserStore(pinia);
+  const navStore = useNavStore(pinia);
 
   const credentials = reactive({
     email: 'john.doe',
@@ -22,13 +25,14 @@
       
       // Store the token in store for authentication
       userStore.token = token;
+
+      // Redirect to the route saved in the navStore
+      router.push({ name: navStore.landingDest });
       
-      // Return the response or data you need
-      return response.data;
     } catch (error) {
       // Handle any errors, such as network errors or invalid credentials
       console.error('Error logging in:', error);
-      throw error; // Optionally, rethrow the error to be caught elsewhere
+      // throw error; // Optionally, rethrow the error to be caught elsewhere
     }
   }
 </script>
